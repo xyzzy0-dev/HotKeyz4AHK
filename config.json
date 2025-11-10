@@ -1,0 +1,34 @@
+{
+ "hotkeys": {
+  "+^g": {
+   "description": "Exc",
+   "text": "Hello world!"
+  },
+  "^!h": {
+   "description": "HOT",
+   "text": "HotHotHotkey"
+  },
+  "^!q": {
+   "description": "ccc",
+   "text": "uh oh"
+  }
+ },
+ "hotstrings": {
+  ":T:brb": {
+   "description": "Be right back",
+   "text": "Be right back!"
+  },
+  ":T:qwe": {
+   "description": "Template 2",
+   "text": "Template 2 text"
+  },
+  ":T:stw": {
+   "description": "Env slogan",
+   "text": "Save the Whales"
+  },
+  ":T:tp1": {
+   "description": "Template 1",
+   "text": "Template 1 text"
+  }
+ }
+}
