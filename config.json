@@ -1,8 +1,16 @@
 {
  "hotkeys": {
+  "+^a": {
+   "description": "TestSpecial",
+   "text": "So much depends upon\nthe red wheelbarrow\nglazed with rainwater\nbeside the white chickens"
+  },
   "+^g": {
    "description": "Exc",
    "text": "Hello world!"
+  },
+  "F1": {
+   "description": "Template 1",
+   "text": "Received:\nName(s):\nNext Steps:\nPending payment\/validation: Y\/N"
   },
   "^!h": {
    "description": "HOT",
@@ -14,9 +22,37 @@
   }
  },
  "hotstrings": {
+  ":T:123Test": {
+   "description": "123 Test",
+   "text": "Testing!"
+  },
+  ":T:bbb": {
+   "description": "B",
+   "text": "asdf"
+  },
   ":T:brb": {
    "description": "Be right back",
    "text": "Be right back!"
+  },
+  ":T:ccc": {
+   "description": "C",
+   "text": "qwer"
+  },
+  ":T:ddd]": {
+   "description": "D",
+   "text": "dDDDD"
+  },
+  ":T:eee]": {
+   "description": "E",
+   "text": "EEEEE"
+  },
+  ":T:fff]": {
+   "description": "F",
+   "text": "FFFFF"
+  },
+  ":T:quo]": {
+   "description": "Quotes \/ \" !@#$%",
+   "text": "\"This is that\"\/\/and more"
   },
   ":T:qwe": {
    "description": "Template 2",

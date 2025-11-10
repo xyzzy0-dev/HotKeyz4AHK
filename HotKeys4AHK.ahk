@@ -1,6 +1,6 @@
 #Requires AutoHotkey v2.0
 #SingleInstance Force
-#Include <jsonV2>
+#Include <JSON>
 
 ; CONSTANTS
 COL_DESCRIPTION := 1
@@ -12,7 +12,7 @@ config := LoadJSONAndConfigure()
 json_config_text := config.json_config_text
 hotkey_map := config.hotkey_map
 
-; GUI
+; GUI INTERFACE
 mainGUI := Gui("+Resize")
 mainGUI.Title := "Hotkey List"
 FONT_SIZE := 8
@@ -156,8 +156,9 @@ EditHotKeyDialog(editMode := false, hotKeyOrString := "Hotkey", rowNum := 0, old
     Suspend(1)
 
     ; GUI
-    editDialogGui := Gui("+AlwaysOnTop", editMode ? "Edit Hotkey" : "Add Hotkey")
-    editDialogGui.OnEvent("Close", (*) => (editDialogGui.Destroy(), Suspend(0)))
+    editDialogGui := Gui("+AlwaysOnTop +Owner" mainGUI.Hwnd, editMode ? "Edit Hotkey" : "Add Hotkey")
+    mainGui.Opt("+Disabled")
+    editDialogGui.OnEvent("Close", (*) => (mainGui.Opt("-Disabled"), editDialogGui.Destroy(), Suspend(0)))
 
     ; DESCRIPTION FIELDS
     editDialogGui.Add("Text", "w300", "Description:")
@@ -193,7 +194,8 @@ EditHotKeyDialog(editMode := false, hotKeyOrString := "Hotkey", rowNum := 0, old
     editDialogGui.Show()
 
     ; CANCEL BUTTON/FUNCTION
-    editDialogGui.Add("Button", "yp w100", "Cancel").OnEvent("Click", (*) => (editDialogGui.Destroy(), Suspend(0)))
+    editDialogGui.Add("Button", "yp w100", "Cancel").OnEvent("Click", (*) => (mainGui.Opt("-Disabled"), editDialogGui.Destroy(),
+    Suspend(0)))
 
     ; SAVE CALLBACK FUNCTION
     SaveHotkey(GuiControl, info) {
@@ -276,6 +278,9 @@ EditHotKeyDialog(editMode := false, hotKeyOrString := "Hotkey", rowNum := 0, old
             "description", newDescription
         )
         UpdateJSON(hotkey_map)
+
+        ; ENABLE MAINGUI
+        mainGui.Opt("-Disabled")
 
         ; TURN HOTSTRINGS BACK ON
         Suspend(0)
@@ -383,21 +388,53 @@ LoadJSONAndConfigure() {
         json_config_text := FileOpen("config.json", "r").Read()
         hotkey_map := json_Load(&json_config_text)
         return { json_config_text: json_config_text, hotkey_map: hotkey_map }
-    } catch {
-        result := MsgBox("config.json not found or invalid.`n`nWould you like to create a new configuration file?",
-            "Configuration File Missing",
-            "YesNo Icon?")
+    } catch as err {
+        ; Check if config.json exists
+        if FileExist("config.json") {
+            ; First: Inform about corruption and need for new file
+            result := MsgBox(
+                "Your configuration file -- config.json -- is corrupted or invalid`n`nA new configuration file must be created to continue`n`nDo you want to proceed?",
+                "Configuration File Corrupted",
+                "YesNo IconX")
 
-        if (result = "Yes") {
-            hotkey_map := Map("hotkeys", Map(), "hotstrings", Map())
-            UpdateJSON(hotkey_map)
-            json_config_text := json_Dump(hotkey_map, true)  ; Generate the JSON text
-            MsgBox("New config.json created successfully!", "Success", "Iconi")
-            return { json_config_text: json_config_text, hotkey_map: hotkey_map }
+            if (result = "No") {
+                MsgBox("Cannot continue without a configuration file", "Error", "Iconx")
+                ExitApp()
+            }
+
+            ; Second: Ask about backup
+            result2 := MsgBox(
+                "Do you want to save a backup copy of the old configuration file in case it can be restored?",
+                "Save Backup?",
+                "YesNo Icon?")
+
+            if (result2 = "Yes") {
+                timestamp := FormatTime(, "yyyyMMdd_HHmmss")
+                backupName := "config_corrupted_" timestamp ".json"
+                try {
+                    FileCopy("config.json", backupName, 1)
+                    MsgBox("Backup saved as`n" backupName "`n`nCreating new config.json...", "Backup Created", "Iconi")
+                } catch {
+                    MsgBox("Failed to create backup`n`nContinuing with new config.json...", "Backup Failed", "IconX")
+                }
+            }
         } else {
-            MsgBox("Cannot continue without a configuration file.", "Error", "Iconx")
-            ExitApp()
+            result := MsgBox("config.json not found`n`nWould you like to create a new configuration file?",
+                "Configuration File Missing",
+                "YesNo Icon?")
+
+            if (result = "No") {
+                MsgBox("Cannot continue without a configuration file", "Error", "Iconx")
+                ExitApp()
+            }
         }
+
+        ; Create new config
+        hotkey_map := Map("hotkeys", Map(), "hotstrings", Map())
+        UpdateJSON(hotkey_map)
+        json_config_text := json_Dump(hotkey_map, true)
+        MsgBox("New config.json created successfully!", "Success", "Iconi")
+        return { json_config_text: json_config_text, hotkey_map: hotkey_map }
     }
 }
 
