@@ -12,7 +12,7 @@ config := LoadJSONAndConfigure()
 json_config_text := config.json_config_text
 hotkey_map := config.hotkey_map
 
-; GUI INTERFACE
+; GUI
 mainGUI := Gui("+Resize")
 mainGUI.Title := "Hotkey List"
 FONT_SIZE := 8
