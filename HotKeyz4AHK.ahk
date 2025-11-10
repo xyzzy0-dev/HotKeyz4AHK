@@ -168,10 +168,14 @@ EditHotKeyDialog(editMode := false, hotKeyOrString := "Hotkey", rowNum := 0, old
 
     ; HOTKEY/HOTSTRING FIELD
     if (hotKeyOrString == "Hotkey") {
-        editDialogGui.Add("Text", "w300", "Hotkey:")
+        hotkey_txt := editDialogGui.Add("Text", "w300",
+            "Click into field below, then press a key combination (like Ctrl-Q)")
         hkString := editDialogGui.Add("Hotkey", "w300")
-        if (editMode)
+        if (editMode) {
+            hotkey_txt.Text := "Hotkey:"
             hkString.Value := oldHotkey
+        }
+
     } else {
         editDialogGui.Add("Text", "w300", "Hotstring:")
         hkString := editDialogGui.Add("Edit", "w300")
@@ -299,6 +303,7 @@ HandleAdd(GuiControl, info) {
 }
 
 HandleEdit(GuiControl, info) {
+    mainGUI.Opt("+OwnDialogs")
     ; EDIT HK
     if (InStr(GuiControl.Text, "Hotkey")) {
         selectedRow := lv_hk.GetNext()
@@ -331,7 +336,7 @@ HandleEdit(GuiControl, info) {
 }
 
 HandleDelete(GuiControl, info) {
-
+    mainGUI.Opt("+OwnDialogs")
     if (InStr(GuiControl.Text, "Hotkey")) {
         selectedRow := lv_hk.GetNext()
         if (!selectedRow) {
@@ -438,8 +443,8 @@ LoadJSONAndConfigure() {
     }
 }
 
-UpdateJSON(m) {
-    f_content := json_Dump(m, true)
+UpdateJSON(mapObject) {
+    f_content := json_Dump(mapObject, true)
     f := FileOpen("config.json", "w")
     f.Write(f_content)
     f.Close()

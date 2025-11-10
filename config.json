@@ -1,70 +1,30 @@
 {
  "hotkeys": {
-  "+^a": {
-   "description": "TestSpecial",
-   "text": "So much depends upon\nthe red wheelbarrow\nglazed with rainwater\nbeside the white chickens"
+  "+^b": {
+   "description": "Example 1",
+   "text": "Hello world!"
   },
   "+^g": {
-   "description": "Exc",
-   "text": "Hello world!"
+   "description": "Example 2",
+   "text": "So much depends upon\nthe red wheelbarrow\nglazed with rainwater\nbeside the white chickens"
   },
   "F1": {
    "description": "Template 1",
    "text": "Received:\nName(s):\nNext Steps:\nPending payment\/validation: Y\/N"
-  },
-  "^!h": {
-   "description": "HOT",
-   "text": "HotHotHotkey"
-  },
-  "^!q": {
-   "description": "ccc",
-   "text": "uh oh"
   }
  },
  "hotstrings": {
-  ":T:123Test": {
-   "description": "123 Test",
-   "text": "Testing!"
-  },
-  ":T:bbb": {
-   "description": "B",
-   "text": "asdf"
-  },
   ":T:brb": {
    "description": "Be right back",
-   "text": "Be right back!"
-  },
-  ":T:ccc": {
-   "description": "C",
-   "text": "qwer"
-  },
-  ":T:ddd]": {
-   "description": "D",
-   "text": "dDDDD"
-  },
-  ":T:eee]": {
-   "description": "E",
-   "text": "EEEEE"
-  },
-  ":T:fff]": {
-   "description": "F",
-   "text": "FFFFF"
-  },
-  ":T:quo]": {
-   "description": "Quotes \/ \" !@#$%",
-   "text": "\"This is that\"\/\/and more"
-  },
-  ":T:qwe": {
-   "description": "Template 2",
-   "text": "Template 2 text"
-  },
-  ":T:stw": {
-   "description": "Env slogan",
-   "text": "Save the Whales"
+   "text": "be right back"
   },
   ":T:tp1": {
    "description": "Template 1",
    "text": "Template 1 text"
+  },
+  ":T:tp2": {
+   "description": "Template 2",
+   "text": "Template 2 line 1\nTemplate 2 line 2"
   }
  }
 }
