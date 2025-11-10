@@ -16,12 +16,13 @@ A comprehensive GUI-based hotkey and hotstring manager for AutoHotkey v2.0 that 
 
 - AutoHotkey v2.0
 - JSON.ahk library (must be in your Lib folder)
+- Do not run files without unzipping/extracting into a new folder.
 
 ## Installation
 
 1. Ensure AutoHotkey v2.0 is installed on your system
-2. Place the `JSON.ahk` library in your AutoHotkey Lib folder
-3. Save the script as `HotKeyz4AHK.ahk`
+2. Unzip the downloaded .zip into a new folder
+3. Make sure the `JSON.ahk` library is in the Lib
 4. Run the script
 
 On first run, if no `config.json` exists, you'll be prompted to create one automatically.
